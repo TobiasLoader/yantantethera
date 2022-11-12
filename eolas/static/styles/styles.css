@@ -7,25 +7,160 @@ html,body {
 
 body {
 	/* 	background: linear-gradient(90deg, rgb(240,240,240) 0%, rgb(240,245,250) 100%); */
-	background: rgb(240,240,240);
-	color: rgb(40,40,40);
+	background: linear-gradient(305deg,rgb(27, 22, 49) 0%, rgb(12, 10, 19) 50%, rgb(27, 22, 49) 100%);
+	color: rgb(235, 235, 235);
 	font-family: "JetBrains Mono";
 	display: flex;
 	flex-direction: column;
 }
 
-h1 {
-	margin:30px;
+#topbar {
+	display:flex;
+	place-content: space-between;
+	border-bottom: rgba(255,255,255,0.1) 1px solid;
 }
 
-.mainbutton {
-	background: white;
-	padding: 15px;
-	border:rgb(100,100,100) 1px solid;
-	cursor: pointer;
-	width:fit-content;
-	margin:15px 30px;
+#topbar h1 {
+	margin:30px;
+	font-size:30px;
+	color:rgb(144, 130, 208);
+	opacity:0.7;
+	text-shadow: black 0 0 10px;
 }
-.mainbutton:hover {
-	background: rgb(184, 233, 237);
+
+#topright {
+	margin: 30px;
+	position: relative;
+	font-size:20px;
+	display: flex;
+}
+#topright > * {
+	cursor: pointer;
+}
+#topright #topbar-search {
+	display: flex;
+}
+#topright #search-icon {
+	width: 30px;
+	height: 30px;
+	margin:5px;
+	margin-right: 30px;
+	opacity: 0.7;
+	/* transition: margin-right 500ms ease; */
+}
+#topright #search-input {
+	width: 0;
+	opacity: 0;
+	transition: all 500ms ease;
+	margin-right: 0;
+	background: transparent;
+	outline: none;
+	border: none;
+	border-bottom: rgba(255,255,255,0.5) 1px solid;
+	font-family: "JetBrains Mono";
+	color:white;
+}
+#topright #search-input::placeholder {
+	font-family: "JetBrains Mono";
+	color: rbga(255,255,255,0.5);
+}
+#topright .search-active #search-icon {
+	opacity: 1;
+}
+#topright .search-active #search-input {
+	width:150px;
+	margin-right: 30px;
+	opacity: 1;
+}
+#topright #search-icon:hover {
+	opacity: 1;
+}
+#topright p {
+	margin: 0;
+	line-height: 40px;
+	opacity: 0.7;
+}
+#topright p:hover {
+	opacity: 1;
+}
+#topright #profile-pic {
+	background: rgb(235, 235, 235);
+	border-radius: 70px;
+	width: 40px;
+	height: 40px;
+	margin-left: 30px;
+	opacity: 0.7;
+}
+#topright #profile-pic:hover {
+	opacity: 1;
+}
+
+.container {
+	margin: 0 max(60px,12%);
+	padding: 0;
+}
+
+h2.container-title {
+	margin-top:45px;
+	font-size:30px;
+	color:rgba(255,255,255,0.7);
+	text-shadow: black 0 0 10px;
+}
+
+#feed {
+	margin: 45px 0;
+}
+
+#feed ul {
+	margin:0;
+	padding:0;
+}
+
+#feed li {
+	list-style: none;
+	display: flex;
+	margin-bottom:45px;
+}
+
+#feed .thumbnail {
+	width: 60px;
+	height: 60px;
+	background: rgb(255,255,255);
+	opacity: 0.5;
+	border-radius: 5px;
+	margin-top: 5px;
+}
+#feed .entry-content {
+	margin-left:30px;
+}
+#feed .entry-title {
+	font-size:21px;
+	text-decoration: none;
+	color:rgb(144, 130, 208);
+}
+#feed .entry-desc {
+	font-size:15px;
+	color:gba(255,255,255,0.8);
+	margin: 5px 0;
+}
+#feed .entry-names {
+	display:flex;
+}
+#feed .entry-names a {
+	margin: 0 10px;
+}
+#feed a.entry-author {
+	font-size:14px;
+	color:rgb(144, 130, 208);
+	margin-left:0;
+	text-decoration: none;
+}
+#feed .entry-contributors {
+	display: flex;
+}
+
+#feed a.entry-cont {
+	font-size: 14px;
+	text-decoration: none;
+	color: rgba(255,255,255,0.5);
 }
