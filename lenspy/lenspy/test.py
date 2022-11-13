@@ -51,11 +51,34 @@ authorised_client = client(token = access_token)
 
 
 
-cREatepRofILe = gql(createProfile('handle:"tobysarcasm",profilePictureUri: null,followNFTURI: null,followModule: null'))
+cREatepRofILe = gql(createProfile('handle:"tobysarcasm6",profilePictureUri: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fuk.linkedin.com%2Fin%2Ftobiasloader&psig=AOvVaw3ie0tA4cNhIGS7THlaW0lb&ust=1668403437074000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOCk66K1qvsCFQAAAAAdAAAAABAE",followNFTURI: null,followModule: null'))
 
 x = authorised_client.execute_query(query = cREatepRofILe)
-print(x)
+# profile = x['createProfile']['txHash']
 
+pRofIle = gql(
+    """
+    query SearchProfiles {
+  search(request: {
+    query: "toby",
+    type: PROFILE,
+    limit: 5
+  }) {
+    ... on ProfileSearchResult {
+      __typename
+      items {
+        ... on Profile {
+          handle
+          id
+        }
+      }
+      
+    }
+  }
+}
 
-# x = client.execute_query(create_profile)
-# print(x)
+"""
+)
+y = authorised_client.execute_query(query = pRofIle)
+print(y)
+
