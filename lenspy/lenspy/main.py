@@ -79,42 +79,27 @@ def get_profileIds(authorised_client,handle):
 
 	pRofile = gql(profile_query)
 
-	y = authorised_client(pRofile)
+	y = authorised_client.execute_query(pRofile)
 
 	return y['search']['items'][0]['id']
 
-def follow():
+def follow(authorised_client, profileID_to_follow):
 
 	follow_query = """
 	mutation createFollowTypedData {
 	createFollowTypedData({
-		
+		profile: "<here>"
 	}) {
 		id
-		expiresAt
-		typedData {
-		domain {
-			name
-			chainId
-			version
-			verifyingContract
-		}
-		types {
-			FollowWithSig {
-			name
-			type
-			}
-		}
-		value {
-			nonce
-			deadline
-			profileIds
-			datas
-		}
-		}
+		
 	}
 	}
 	"""
+
+	follow_query = follow_query.replace('<here>',profileID_to_follow)
+	
+	authorised_client.execute_query(gql(follow_query))
+	
 
 
 # sortcriteria = ['TOP_COMMENTED','TOP_COLLECTED','TOP_MIRRORED','LATEST','CURATED_PROFILES']
