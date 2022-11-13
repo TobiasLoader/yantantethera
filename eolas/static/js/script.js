@@ -1,5 +1,7 @@
 var searchbaropen = false;
 var logintextentered = false;
+var contributornameentered = false;
+var contributornames = [];
 
 function sendsearch(){
 	const searchval = $('#search-input').val();
@@ -23,9 +25,18 @@ $('#search-input').keydown(function (e) {
 	}
 });
 
+$("#topright #profile-name").click(function(){
+	window.open(window.location.origin + "/profile?handle="+$(this).text(),"_self");
+});
+
+$("#topright #profile-pic").click(function(){
+	window.open(window.location.origin + "/profile?handle="+$("#topright #profile-name").text(),"_self");
+});
+
+
 $('#login-wallet-input').keydown(function (e) {
 	if (!logintextentered){
-		$('#loginactionbutton').addClass('login-allowed');
+		$('#loginactionbutton').addClass('btn-allowed');
 	}
 	logintextentered = true;
 });
@@ -34,4 +45,33 @@ $('#loginactionbutton').click(function () {
 	if (logintextentered){
 		window.open(window.location.origin,"_self");
 	}
+});
+
+$('#topbar h1').click(function(){
+	window.open(window.location.origin);
+});
+
+$('#add-publication').click(function(){
+	window.open(window.location.origin + "/uploadpage","_self");
+});
+
+$('#add-contributor-input').keydown(function(){
+	if (!contributornameentered){
+		$('#addcontributorbtn').addClass('btn-allowed');
+	}
+	contributornameentered = true;
+});
+$('#addcontributorbtn').click(function(){
+	if (contributornameentered){
+		$('#addcontributorbtn').removeClass('btn-allowed');
+		contributornameentered = false;
+		contributornames.push($('#add-contributor-input').val());
+		$('#add-contributor-input').val('');
+		$('#currentcontributors').text(contributornames.toString());
+	}
+});
+$('#uploadpaperbtn').click(function(){
+	console.log(contributornames)
+	console.log($('#paper-content').val());
+	window.open(window.location.origin,"_self");
 });

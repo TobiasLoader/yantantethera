@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block topright %}
+	{% include 'topright.html' %}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<h2 class="container-title">Upload paper:</h2>
+		<div class="enter-contributor-row">
+			<label>Add contributor</label>
+			<input id='add-contributor-input' value="" placeholder="John">
+		<div>
+		<div id='addcontributorbtn' class="actionbutton">
+			<img src="{{ url_for('static',filename='assets/img/add-circle.svg') }}">
+			<p>add</p>
+		</div>
+		<div id='currentcontributors'></div>
+		<div id="uploadcontent">
+			<p>Research paper to upload:</p>
+			<textarea id="paper-content" value="" placeholder="research :)"></textarea>
+		</div>
+		<div id='uploadpaperbtn' class="actionbutton btn-allowed">
+			<img src="{{ url_for('static',filename='assets/img/upload.svg') }}">
+			<p>upload</p>
+		</div>
+	</div>
+{% endblock %}

@@ -7,7 +7,7 @@ html,body {
 
 body {
 	/* 	background: linear-gradient(90deg, rgb(240,240,240) 0%, rgb(240,245,250) 100%); */
-	background: linear-gradient(305deg,rgb(27, 22, 49) 0%, rgb(12, 10, 19) 50%, rgb(27, 22, 49) 100%);
+	background: linear-gradient(305deg,rgb(35, 29, 61) 0%, rgb(12, 10, 19) 50%, rgb(35, 29, 61) 100%);
 	color: rgb(235, 235, 235);
 	font-family: "JetBrains Mono";
 	display: flex;
@@ -29,11 +29,16 @@ input {
 }
 
 #topbar h1 {
+	cursor: pointer;
 	margin:30px;
 	font-size:30px;
 	color:rgb(144, 130, 208);
 	opacity:0.7;
 	text-shadow: black 0 0 10px;
+	transition: opacity 500ms ease;
+}
+#topbar h1:hover {
+	opacity:1;
 }
 
 #topright {
@@ -187,15 +192,128 @@ h2.container-title {
 	opacity: 0.5;
 	transition: opacity 500ms ease;
 }
-.actionbutton.login-allowed {
+.actionbutton.btn-allowed {
 	cursor: pointer;
 	opacity: 1;
 }
 .actionbutton p {
 	margin: 0;
 }
-.wallet-address-row .actionbutton img {
+.actionbutton img {
 	width:25px;
 	height:25px;	
 	margin-right:10px;
+}
+
+#profile {
+	margin: 45px 0;
+	display: flex;
+}
+
+#profile .profileimg {
+	width: 100px;
+	height: 100px;
+	background: rgb(255,255,255);
+	opacity: 0.5;
+	border-radius: 5px;
+	margin-top: 5px;
+}
+#profile .profile-content {
+	margin-left:30px;
+}
+#profile .profile-name {
+	font-size:21px;
+	text-decoration: none;
+	color:rgb(144, 130, 208);
+	margin: 0;
+}
+#profile .profile-bio {
+	font-size:15px;
+	color:gba(255,255,255,0.8);
+	margin: 5px 0;
+}
+#profile .profile-pubs {
+	display:flex;
+	flex-direction: column;
+}
+#profile .profile-pubs p {
+	margin: 30px 0 10px 0;
+}
+#profile ul {
+	padding: 0;
+}
+#profile li {
+	list-style: none;
+	display: flex;
+	margin-bottom:10px;
+}
+#profile a.profile-pub {
+	margin: 0 10px;
+	font-size:16px;
+	color:rgb(144, 130, 208);
+	margin-left:0;
+	text-decoration: none;
+}
+
+
+#add-publication {
+	margin-top: 45px;
+}
+
+#publication {
+	margin: 45px 0;
+	display: flex;
+}
+#publication .pub-content {
+	margin-left:30px;
+}
+#publication .pub-title {
+	font-size:21px;
+	text-decoration: none;
+	color:rgb(144, 130, 208);
+}
+#publication .pub-desc {
+	font-size:15px;
+	color:gba(255,255,255,0.8);
+	margin: 5px 0;
+}
+#publication .pub-names {
+	display:flex;
+	margin-top:10px;
+}
+#publication .pub-names a {
+	margin: 0 10px;
+}
+#publication a.pub-author {
+	font-size:14px;
+	color:rgb(144, 130, 208);
+	margin-left:0;
+	text-decoration: none;
+}
+#publication .pub-contributors {
+	display: flex;
+}
+
+#publication a.pub-cont {
+	font-size: 14px;
+	text-decoration: none;
+	color: rgba(255,255,255,0.5);
+}
+
+#addcontributorbtn {
+	margin-top: 10px;
+}
+#currentcontributors {
+	margin: 20px 0;
+	color:rgb(144, 130, 208);
+}
+
+#paper-content {
+	color:white;
+	font-size: 16px;
+	padding: 10px;
+	height:300px;
+	background:rgba(255,255,255,0.1);
+	width:100%;
+	border:rgba(255,255,255,0.2);
 }

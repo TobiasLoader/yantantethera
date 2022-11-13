@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block topright %}
+	{% include 'topright.html' %}
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div id="publication">
+			<div class='pub-content'>
+				<a class='pub-title' href='pub?title={{pub['title']}}'>{{pub["title"]}}</a>
+				<p class='pub-desc'>{{pub["desc"]}}</p>
+				<div class='pub-names'>
+					<a class='pub-author' href="profile?handle={{pub["author"]}}">{{pub["author"]}}</a>
+					<div class='pub-contributors'>
+						{%- for cont in pub["contributors"] %}
+							<a class='pub-cont' href="profile?handle={{cont}}">{{cont}},</a>
+						{% endfor %}
+					</div>
+				</div>
+				<div>
+					<p>{{pub['data']}}</p>
+				</div>
+			</div>
+		</div>
+		{# <div>
+			<p>{{pub['title']}}</p>
+		</div>
+		<div>
+			<p>{{pub['description']}}</p>
+		</div>
+		<div>
+			<a href="profile?handle={{pub['author']}}">{{pub['author']}}</a>
+		</div>
+		<div>
+			{%- for cont in pub["contributors"] %}
+				<a class='' href="profile?handle={{cont}}">{{cont}},</a>
+			{% endfor %}
+		</div>
+		<div>
+			<p>{{pub['data']}}</p>
+		</div> #}
+	</div>
+{% endblock %}

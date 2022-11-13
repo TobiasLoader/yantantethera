@@ -4,13 +4,13 @@
             <li>
                 <img class='thumbnail' src="{{ url_for('static',filename='assets/img/'+entry['src'])}}"" alt='thumbnail'>
                 <div class='entry-content'>
-                    <a class='entry-title' href='{{entry["href"]}}'>{{entry["title"]}}</a>
+                    <a class='entry-title' href='pub?title={{entry['title']}}'>{{entry["title"]}}</a>
                     <p class='entry-desc'>{{entry["desc"]}}</p>
                     <div class='entry-names'>
-                        <a class='entry-author' href="{{entry['author']['href']}}}">{{entry["author"]["name"]}}</a>
+                        <a class='entry-author' href="profile?handle={{entry["author"]}}">{{entry["author"]}}</a>
                         <div class='entry-contributors'>
                             {%- for cont in entry["contributors"] %}
-                                <a class='entry-cont' href="{{cont['href']}}}">{{cont['name']}},</a>
+                                <a class='entry-cont' href="profile?handle={{cont['name']}}">{{cont['name']}},</a>
                             {% endfor %}
                         </div>
                     </div>
