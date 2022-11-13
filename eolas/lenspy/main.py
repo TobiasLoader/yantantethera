@@ -1,5 +1,5 @@
 from lenspy.GraphQLClient import client
-from queries import *
+from lenspy.queries import *
 from gql import gql
 from web3.auto import w3
 from eth_account.messages import encode_defunct
@@ -31,24 +31,49 @@ def lOgin(handle_name,wallet_private_address):
 	access_token = x['authenticate']['accessToken']
 
 	authorised_client = client(token = access_token)
+	
+	create_profile_query = """
+	mutation createProfile {
+  createProfile(request:{<here>}) {
+    ... on RelayerResult {
+      txHash
+    }
+    ... on RelayError {
+      reason
+    }
+    __typename
+  }
+}
 
+	"""
+
+	
 	handles = [handle_name]
-	cREatepRofILe = gql(createProfile('handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format(handle_name)))
+	cREatepRofILe = gql(create_profile_query.replace('<here>','handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format(name = handle_name)))
 	x = authorised_client.execute_query(query = cREatepRofILe)
-	profile_ids = [get_profileIds(authorised_client,handle_name)]
+	print(handle_name)
+	print(x)
+	profile_ids = [2]
 
-	cREatepRofILe = gql(createProfile('handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format('James')))
+	cREatepRofILe = gql(create_profile_query.replace('<here>','handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format(name = 'James')))
 	x = authorised_client.execute_query(query = cREatepRofILe)
-	profile_ids.append(get_profileIds(authorised_client,'James'))
+	print('James')
+	print(x)
+	
+	# profile_ids.append(get_profileIds(authorised_client,'James'))
 	handles.append('James')
 
-	for i in range(8):
-		random_name = names.get_first_name()
-		cREatepRofILe = gql(createProfile('handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format(random_name+str(random.randint(1,9000)))))
+	for i in range(0):
+		while True:
+			random_name = names.get_first_name()
+			if len(random_name) > 5:
+				break
+		cREatepRofILe = gql(create_profile_query.replace('<here>','handle:"{name}",profilePictureUri: null,followNFTURI: null,followModule: null'.format(name = random_name+str(random.randint(1,9000)))))
 		x = authorised_client.execute_query(query = cREatepRofILe)
-
+		# print(random_name)
+		# print(x)
 		handles.append(random_name)
-		profile_ids.append(get_profileIds(authorised_client,random_name))
+		# profile_ids.append(get_profileIds(authorised_client,random_name))
 
 
 	return authorised_client, handles, profile_ids
@@ -79,42 +104,27 @@ def get_profileIds(authorised_client,handle):
 
 	pRofile = gql(profile_query)
 
-	y = authorised_client(pRofile)
-
+	y = authorised_client.execute_query(pRofile)
+	print(y)
 	return y['search']['items'][0]['id']
 
-def follow():
+def follow(authorised_client, profileID_to_follow):
 
 	follow_query = """
 	mutation createFollowTypedData {
 	createFollowTypedData({
-		
+		profile: "<here>"
 	}) {
 		id
-		expiresAt
-		typedData {
-		domain {
-			name
-			chainId
-			version
-			verifyingContract
-		}
-		types {
-			FollowWithSig {
-			name
-			type
-			}
-		}
-		value {
-			nonce
-			deadline
-			profileIds
-			datas
-		}
-		}
+		
 	}
 	}
 	"""
+
+	follow_query = follow_query.replace('<here>',profileID_to_follow)
+	
+	authorised_client.execute_query(gql(follow_query))
+	
 
 
 # sortcriteria = ['TOP_COMMENTED','TOP_COLLECTED','TOP_MIRRORED','LATEST','CURATED_PROFILES']
@@ -161,7 +171,8 @@ def follow():
 
 
 class PubClass:
-	def __init__(self,title, description, contributors, content):
+	def __init__(self,author,title, description, contributors, content):
+		self.author = author
 		self.title = title
 		self.desc = description
 		self.contributors = contributors
