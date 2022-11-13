@@ -15,7 +15,7 @@
 		<div id="profile">
 			<img class='profileimg' src="{{ url_for('static',filename='assets/img/'+profile['src'])}}"" alt='profile image'>
 			<div class='profile-content'>
-				<p class='profile-name'>{{profile["name"]}}</p>
+				<p class='profile-name'>{{profile["name"]}} - {{profile["id"]}}</p>
 				<p class='profile-bio'>{{profile["bio"]}}</p>
 				<div id='followprofilebutton' class="actionbutton btn-allowed">
 					<img src="{{ url_for('static',filename='assets/img/add-circle.svg') }}">

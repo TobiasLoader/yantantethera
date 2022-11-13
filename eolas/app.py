@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 # from flask_session import Session
-import os
+import random
+# import os
+from lenspy.main import *
+
+
 
 app = Flask(__name__)
 # 
@@ -8,11 +12,39 @@ app = Flask(__name__)
 # app.config.from_object(__name__)
 # Session(app)
 
-singlequerypost = {'src':'article.svg','href':'article-id','title':'Better physics','desc':'Revolutionary discovery undermines modern physics','author':{'name':'Toby Loader','href':'profile-id'},'contributors':[{'name':'Daisy Loader','href':'profile-id'},{'name':'Einstein','href':'profile-id'}]}
-
-fromqueryposts = [singlequerypost,singlequerypost,singlequerypost,singlequerypost]
+singlequerypost = {'src':'article.svg','href':'article-id','title':'Better physics','desc':'Revolutionary discovery undermines modern physics','author':'Toby Loader','contributors':['Daisy Loader','Einstein']}
 
 username = 'toby' # session['username'] from login
+auth_client = None
+localpaperstorage = {
+	'James':[
+		PubClass('James Research','Computer science problems',['toby','daisy'],'Lorem ipsum bla bla bla bla bla bla bla'),
+		PubClass('Big Paper','Maths proof',['daisy'],'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'),
+		PubClass('Friendly numbers','Fun maths problems',['rishin'],'Lorem ipsum bla bla bla bla bla bla bla'),
+		PubClass('James Research','Computer science problems',['toby','daisy'],'Lorem ipsum bla bla bla bla bla bla bla')
+	]}
+profilehandles = []
+profileids = []
+
+def pubclasstodict(author,pub):
+	return {'author':author,'title':pub.title,'desc':pub.desc,'contributors':pub.contributors,'data':pub.content}
+	
+def explorepapers():
+	feed = []
+	for handle, pubs in localpaperstorage.items():
+		for pub in pubs:
+			if random.random()>0.5:
+				feed.append(pubclasstodict(handle,pub))
+	return feed
+
+def searchpapers(query):
+	feed = []
+	for handle, pubs in localpaperstorage.items():
+		for pub in pubs:
+			if query in pub.contributors:
+				feed.append(pubclasstodict(handle,pub))
+	return feed
+
 
 @app.route('/')
 def home():
@@ -21,10 +53,10 @@ def home():
 		'home.html',
 		name=username,
 		src="profile-pic",
-		feed=fromqueryposts,
+		feed=explorepapers(),
 	)
 
-@app.route('/uploadpage')
+@app.route('/uploadpaper')
 def uploadpaper():
 	return render_template(
 		'uploadpage.html',
@@ -34,13 +66,21 @@ def uploadpaper():
 @app.route('/search')
 def searchquery():
 	search = request.args.get("term")
+	pubfeed = searchpapers(search)
+	# searchprofiles(search,10)
 	return render_template(
 		'search.html',
 		search=search,
 		name=username,
 		src="profile-pic",
-		feed=fromqueryposts,
+		feed=pubfeed,
 	)
+
+@app.route('/logindata', methods=['POST'])
+def logindata():
+	# print(request.json)
+	auth_client, profilehandles, profileids = lOgin(request.json['handle'],request.json['private-address'])
+	return jsonify(message='success')
 
 @app.route('/login')
 def login():
@@ -51,7 +91,7 @@ def login():
 @app.route('/profile')
 def profile():
 	handle = request.args.get("handle")
-	singleprofile = {'src':'profile-pic.svg','name':handle,'bio':'Philosifying Physics','publications':[{'title':'Bla bla','href':'blabla'},{'title':'Bla bla 2','href':'blabla2'},{'title':'Bla bla 3','href':'blabla3'}]}
+	singleprofile = {'src':'profile-pic.svg','name':handle,'id':profileids[profilehandles.index(handle)],'bio':'Philosifying Physics','publications':localpaperstorage[handle]}
 	return render_template(
 		'profile.html',
 		name=username,
@@ -60,10 +100,25 @@ def profile():
 
 @app.route('/pub')
 def pub():
+	author = request.args.get("author")
 	title = request.args.get("title")
-	singlepub = {'author':'Toby','title':title,'desc':'Research into cool stuff I want to make public','contributors':['Yan','Tan','Tethera'],'data':'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
+	allauthorspub = localpaperstorage[author]
+	for mypub in allauthorspub:
+		if mypub.title == title:
+			return render_template(
+				'publication.html',
+				name=username,
+				pub=pubclasstodict(author,mypub)
+			)
 	return render_template(
 		'publication.html',
 		name=username,
-		pub=singlepub
+		pub={'author':'none','title':'none','desc':'none','contributors':[],'data':'none'}
 	)
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+	print(request.json)
+	localpaperstorage[username].append(PubClass(request.json['title'],request.json['desc'],request.json['contributornames'],request.json['data']))
+	return jsonify(message='success')

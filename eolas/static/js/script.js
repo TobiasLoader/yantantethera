@@ -26,11 +26,11 @@ $('#search-input').keydown(function (e) {
 });
 
 $("#topright #profile-name").click(function(){
-	window.open(window.location.origin + "/profile?handle="+$(this).text(),"_self");
+	window.open(window.location.origin + "/profile?handle="+username,"_self");
 });
 
 $("#topright #profile-pic").click(function(){
-	window.open(window.location.origin + "/profile?handle="+$("#topright #profile-name").text(),"_self");
+	window.open(window.location.origin + "/profile?handle="+username,"_self");
 });
 
 
@@ -43,7 +43,16 @@ $('#login-wallet-input').keydown(function (e) {
 
 $('#loginactionbutton').click(function () {
 	if (logintextentered){
-		window.open(window.location.origin,"_self");
+		const data = JSON.stringify({'handle':$('#login-handle-input').val(),'private-address':$('#login-wallet-input').val()});
+		$.ajax({
+			type : 'POST',
+			url : "/logindata",
+			contentType: 'application/json;charset=UTF-8',
+			data : data
+		}).then((res)=>{
+			console.log(res);
+			window.open(window.location.origin,"_self");
+		});
 	}
 });
 
@@ -71,7 +80,17 @@ $('#addcontributorbtn').click(function(){
 	}
 });
 $('#uploadpaperbtn').click(function(){
-	console.log(contributornames)
-	console.log($('#paper-content').val());
-	window.open(window.location.origin,"_self");
+	const papertitle = $('#paper-title').val();
+	const paperdesc = $('#paper-desc').val();
+	const paperdata = $('#papercontent-textarea').val();
+	const paperobj = JSON.stringify({'title':papertitle,'desc':paperdesc,'contributornames': contributornames,'data':paperdata});
+	$.ajax({
+		type : 'POST',
+		url : "/upload",
+		contentType: 'application/json;charset=UTF-8',
+		data : paperobj
+	}).then((res)=>{
+		console.log(res);
+		window.open(window.location.origin,"_self");
+	});
 });

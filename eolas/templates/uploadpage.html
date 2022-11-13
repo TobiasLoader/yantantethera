@@ -7,6 +7,14 @@
 {% block content %}
 	<div class="container">
 		<h2 class="container-title">Upload paper:</h2>
+		<div id="titlecontent">
+			<p>Title of paper:</p>
+			<textarea id="paper-title" value="" placeholder="title"></textarea>
+		</div>
+		<div id="desccontent">
+			<p>Description of paper:</p>
+			<textarea id="paper-desc" value="" placeholder="description"></textarea>
+		</div>
 		<div class="enter-contributor-row">
 			<label>Add contributor</label>
 			<input id='add-contributor-input' value="" placeholder="John">
@@ -16,9 +24,9 @@
 			<p>add</p>
 		</div>
 		<div id='currentcontributors'></div>
-		<div id="uploadcontent">
+		<div id="papercontent">
 			<p>Research paper to upload:</p>
-			<textarea id="paper-content" value="" placeholder="research :)"></textarea>
+			<textarea id="papercontent-textarea" value="" placeholder="research :)"></textarea>
 		</div>
 		<div id='uploadpaperbtn' class="actionbutton btn-allowed">
 			<img src="{{ url_for('static',filename='assets/img/upload.svg') }}">

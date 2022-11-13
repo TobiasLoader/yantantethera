@@ -308,12 +308,24 @@ h2.container-title {
 	color:rgb(144, 130, 208);
 }
 
-#paper-content {
+textarea {
 	color:white;
 	font-size: 16px;
 	padding: 10px;
-	height:300px;
 	background:rgba(255,255,255,0.1);
-	width:100%;
 	border:rgba(255,255,255,0.2);
+	height:25px;
+}
+#titlecontent, #desccontent {
+	margin:30px 0;
+	display: flex;
+}
+
+#titlecontent textarea, #desccontent textarea {
+	margin-left:20px;
+}
+
+#papercontent-textarea {
+	height:300px;
+	width:100%;
 }
