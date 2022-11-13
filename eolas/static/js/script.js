@@ -1,4 +1,5 @@
 var searchbaropen = false;
+var logintextentered = false;
 
 function sendsearch(){
 	const searchval = $('#search-input').val();
@@ -20,4 +21,17 @@ $('#search-input').keydown(function (e) {
 	if (e.keyCode == 13) {
 		sendsearch();
 	}
-})
+});
+
+$('#login-wallet-input').keydown(function (e) {
+	if (!logintextentered){
+		$('#loginactionbutton').addClass('login-allowed');
+	}
+	logintextentered = true;
+});
+
+$('#loginactionbutton').click(function () {
+	if (logintextentered){
+		window.open(window.location.origin,"_self");
+	}
+});

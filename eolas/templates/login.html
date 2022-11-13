@@ -2,6 +2,14 @@
 
 {% block content %}
 	<div class="container">
-		Login
+		<h2 class="container-title">Login</h2>
+		<div class="wallet-address-row">
+			<label>Wallet address</label>
+			<input id='login-wallet-input' placeholder='0x..' value=''>
+		<div>
+		<div id='loginactionbutton' class="actionbutton">
+			<img src="{{ url_for('static',filename='assets/img/send.svg') }}">
+			<p>login</p>
+		</div>
 	</div>
 {% endblock %}

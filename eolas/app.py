@@ -1,12 +1,6 @@
 from flask import Flask,render_template,request
 app = Flask(__name__)
 
-@app.route('/login')
-def login():
-	return render_template(
-		'login.html'
-	)
-
 singlequerypost = {'src':'article.svg','href':'article-id','title':'Better physics','desc':'Revolutionary discovery undermines modern physics','author':{'name':'Toby Loader','href':'profile-id'},'contributors':[{'name':'Daisy Loader','href':'profile-id'},{'name':'Einstein','href':'profile-id'}]}
 
 fromqueryposts = [singlequerypost,singlequerypost,singlequerypost,singlequerypost]
@@ -37,3 +31,9 @@ def searchquery():
 		feed=fromqueryposts,
 	)
 
+@app.route('/login')
+def login():
+	return render_template(
+		'login.html'
+	)
+	
