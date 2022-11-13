@@ -11,7 +11,7 @@ def approvedModuleAllowanceAmount(var_dict):
 	return x
 
 def authenticate(var_dict):
-	x="mutation authenticate {{  authenticate(request:         {{        {var_dict}}}        ) {{    accessToken    refreshToken  }}}}".format(var_dict=var_dict)
+	x="mutation Authenticate {{  authenticate(request:         {{        {var_dict}}}        ) {{    accessToken    refreshToken  }}}}".format(var_dict=var_dict)
 	return x
 
 def Broadcast(var_dict):
