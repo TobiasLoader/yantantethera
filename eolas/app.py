@@ -91,7 +91,7 @@ def login():
 @app.route('/profile')
 def profile():
 	handle = request.args.get("handle")
-	singleprofile = {'src':'profile-pic.svg','name':handle,'id':profileids[profilehandles.index(handle)],'bio':'Philosifying Physics','publications':localpaperstorage[handle]}
+	singleprofile = {'src':'profile-pic.svg','name':handle,'id':random.randint(0,100),'bio':'Philosifying Physics','publications':localpaperstorage[handle]}
 	return render_template(
 		'profile.html',
 		name=username,

@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 unauthorised_client = client()
 # print(client.client.schema)
-wallet_private_address = '1f523c0452136325ecd2d6897d7742189203aad003e4a68c328b02c11d4e963b'
+wallet_private_address = ''
 
 wallet_public_address = '0x7CFFc134A864bc05A1Dcf73966E5bF6a20E8F6A3'
 
